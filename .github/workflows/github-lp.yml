@@ -3,6 +3,14 @@ on :
     push :
         branches :
             - lab9-lp
+    pull_request :
+        branches :
+            - lab9-lp
+    workflow_dispatch:
+    
+
+env: 
+    BUILD_ARTIFACT_NAME: "package"
 
 jobs :
     build :
@@ -11,15 +19,40 @@ jobs :
         steps:
             - name: Checkout repository
               uses: actions/checkout@v2
+            - name: Setup Node.js
+              uses: actions/setup-node@v2
+              with:
+                node-version: '20'
             - name: dependancies
-              run: npm install 
+              run: npm install #faire avec une action github ?
             - name: Application build
               run: npm run build 
             - name: Archive production artifacts
               uses: actions/upload-artifact@v4
               with:
-                name: dist-without-markdown
+                name: lab9-artifact
                 path: |
                     dist
                     !dist/**/*.md
+    test:
+        runs-on: ubuntu-latest
+        
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+        
+        - name: Setup Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: '20'
+            
+        - name: Install dependencies
+          run: npm install
+        
+        - name: Run linter and static type checker
+          run: npm run lint && npm run type-check
+        
+        - name: Run unit tests
+          run: npm test
+
 
