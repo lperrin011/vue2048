@@ -2,7 +2,7 @@ name : GitHub LP
 on : 
     push :
         branches :
-            -lab9-lp
+            - lab9-lp
 
 jobs :
     build :
@@ -23,4 +23,3 @@ jobs :
                     dist
                     !dist/**/*.md
 
-                    
