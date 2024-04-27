@@ -16,7 +16,7 @@ permissions:
 
 env: 
   BUILD_ARTIFACT_NAME: "package"
-  APP_LOCATION: "./src/"
+  APP_LOCATION: "./src"
   OUTPUT_LOCATION: "build" 
 
 jobs :
