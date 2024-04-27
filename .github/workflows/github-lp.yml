@@ -1,16 +1,19 @@
 name : GitHub LP
 on : 
-    push :
-        branches :
-            - lab9-lp
-    pull_request :
-        branches :
-            - lab9-lp
-    workflow_dispatch :
+  workflow_dispatch :
+  push :
+      branches :
+        - lab9-lp
+  pull_request :
+      branches :
+        - lab9-lp
+    
     
 
 env: 
     BUILD_ARTIFACT_NAME: "package"
+    APP_LOCATION: "./src/"
+    OUTPUT_LOCATION: "build" 
 
 jobs :
     build :
@@ -54,5 +57,29 @@ jobs :
         
         - name: Run unit tests
           run: npm test
+    deploy-qa:
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            submodules: true
+        - name: Build And Deploy
+          uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9
+          with:
+            azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+            action: "upload"
+            app_location: ${{ env.APP_LOCATION }}
+            output_location: ${{ env.OUTPUT_LOCATION }}
+        
+
+
+
+    
+    deploy-prod :
+        needs : deploy-qa
+        runs-on: ubuntu-latest
+
 
 
