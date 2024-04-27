@@ -80,9 +80,9 @@ jobs :
 
 
     
-    deploy-prod :
-        needs : deploy-qa
-        runs-on: ubuntu-latest
+   # deploy-prod :
+    #    needs : deploy-qa
+     #   runs-on: ubuntu-latest
 
 
 
