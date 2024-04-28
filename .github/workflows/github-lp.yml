@@ -1,6 +1,11 @@
 name : GitHub LP
 on : 
   workflow_dispatch :
+    inputs:
+      jobs_to_run:
+        description: 'Jobs to run'
+        required: true
+        default: 'build,deploy-qa,deploy-prod'
   push :
     branches :
       - lab9-lp
