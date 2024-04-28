@@ -8,8 +8,6 @@ on :
         default: 'build,deploy-qa,deploy-prod'
   schedule:   
     - cron: '0 8 * * 1'
-    paths:
-      - 'docs/**'
   push :
     branches :
       - lab9-lp
