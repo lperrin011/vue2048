@@ -7,7 +7,7 @@ on :
         required: true
         default: 'build,deploy-qa,deploy-prod'
   schedule:   
-    - cron: '0 12 * * 7'
+    - cron: '0 8 * * 1'
   push :
     branches :
       - lab9-lp
