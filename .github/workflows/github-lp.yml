@@ -111,3 +111,19 @@ jobs :
             action: "upload"
             app_location: ${{ env.APP_LOCATION }}
             output_location: ${{ env.OUTPUT_LOCATION }}
+
+    manage-retention:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Vérifier la branche
+          run: echo "La branche modifiée est ${{ github.ref }}"
+        - name: Déterminer la durée de rétention
+          id: retention-duration
+          run: |
+            if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+              echo "::set-output name=duration::7 days"
+            else
+              echo "::set-output name=duration::1 day"
+            fi
+            echo "La durée de rétention est ${{ steps.retention-duration.outputs.duration }}"
+
