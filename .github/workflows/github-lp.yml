@@ -11,12 +11,12 @@ on :
   push :
     branches :
       - lab9-lp
-    paths:
+    paths-ignore:
       - 'docs/**'
   pull_request :
     branches :
       - lab9-lp
-    paths:
+    paths-ignore:
       - 'docs/**'
     
   
