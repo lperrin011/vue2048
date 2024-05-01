@@ -126,4 +126,5 @@ jobs :
               echo "::set-output name=duration::1 day"
             fi
             echo "La durée de rétention est ${{ steps.retention-duration.outputs.duration }}"
+            
 
