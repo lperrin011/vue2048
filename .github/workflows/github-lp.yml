@@ -5,7 +5,7 @@ on :
       jobs_to_run:
         description: 'Jobs to run'
         required: true
-        default: 'build,deploy-qa,deploy-prod'
+        default: 'build,test,deploy-qa,deploy-prod'
   schedule:   
     - cron: '0 8 * * 1' 
   push :
@@ -32,7 +32,6 @@ env:
 
 jobs :
     build :
-      if: contains(github.event.inputs.jobs_to_run, 'build')
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repository
@@ -54,6 +53,8 @@ jobs :
                 !dist/**/*.md
 
     test:
+      #allow to specify which job you want to run when manually run
+      if: contains(github.event.inputs.jobs_to_run, 'test')
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repository
@@ -75,6 +76,7 @@ jobs :
 
     deploy-qa:
       needs: build
+      if: contains(github.event.inputs.jobs_to_run, 'deploy-qa')
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v4
@@ -95,6 +97,7 @@ jobs :
   
     deploy-prod :
       needs : deploy-qa
+      if: contains(github.event.inputs.jobs_to_run, 'deploy-prod')
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v4
