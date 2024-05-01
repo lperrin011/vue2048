@@ -5,7 +5,7 @@ on :
       jobs_to_run:
         description: 'Jobs to run'
         required: true
-        default: 'build,test,deploy-qa,deploy-prod'
+        default: 'build,test,deploy-qa,deploy-prod,manage-retention'
   schedule:   
     - cron: '0 8 * * 1' 
   push :
@@ -54,7 +54,7 @@ jobs :
 
     test:
       #allow to specify which job you want to run when manually run
-      if: ${{ github.event_name != 'workflow_dispatch' || contains(github.event.inputs.jobs_to_run, 'test') }}
+      if: contains(github.event.inputs.jobs_to_run, 'test') 
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repository
