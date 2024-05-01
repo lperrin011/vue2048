@@ -54,7 +54,7 @@ jobs :
 
     test:
       #allow to specify which job you want to run when manually run
-      if: contains(github.event.inputs.jobs_to_run, 'test')
+      if: ${{ github.event_name != 'workflow_dispatch' || contains(github.event.inputs.jobs_to_run, 'test') }}
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repository
